@@ -41,6 +41,7 @@ class Solution():
         return head
 
 #优化版
+"""与未优化的版本相比，此代码的优化版本应该提高了性能，因为它使用循环而不是递归来遍历链表。这有助于减少函数调用的开销并提高代码的性能。"""
 class Solution():
     def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
         def flatten_iter(node: "Node") -> "Node":
