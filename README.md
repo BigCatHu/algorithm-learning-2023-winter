@@ -21,14 +21,48 @@ n2.next = n3
 n3.next = n4
 ```
 ## 队列
-在循环队列中，当队列为空，可知 $\textit{front}=\textit{rear}front=rear$；而当所有队列空间全占满时，也有 $\textit{front}=\textit{rear}front=rear$。为了区别这两种情况，假设队列使用的数组有 $\textit{capacity}capacity $个存储空间，则此时规定循环队列最多只能有$\textit{capacity} - 1capacity−1 $个队列元素，当循环队列中只剩下一个空存储单元时，则表示队列已满。根据以上可知，队列判空的条件是 $\textit{front}=\textit{rear}front=rear$，而队列判满的条件是 $\textit{front} = (\textit{rear} + 1) \bmod \textit{capacity}$。
-对于一个固定大小的数组，只要知道队尾$ \textit{rear}rear$ 与队首 $\textit{front}front$，即可计算出队列当前的长度：
+在循环队列中，当队列为空，可知 $\textit{front}=\textit{rear}$；而当所有队列空间全占满时，也有 $\textit{front}=\textit{rear}$。为了区别这两种情况，假设队列使用的数组有 $\textit{capacity} $个存储空间，则此时规定循环队列最多只能有$\textit{capacity} - 1 $个队列元素，当循环队列中只剩下一个空存储单元时，则表示队列已满。根据以上可知，队列判空的条件是 $\textit{front}=\textit{rear}$，而队列判满的条件是 $\textit{front} = (\textit{rear} + 1) \bmod \textit{capacity}$。
+对于一个固定大小的数组，只要知道队尾$ \textit{rear}$ 与队首 $\textit{front}$，即可计算出队列当前的长度：
 $$
 (\textit{rear} - \textit{front} + \textit{capacity}) \bmod \textit{capacity}
 $$
 循环队列的属性如下:
 
-$\textit{elements}elements$：一个固定大小的数组，用于保存循环队列的元素。
-$\textit{capacity}capacity$：循环队列的容量，即队列中最多可以容纳的元素数量。
-$\textit{front}front$：队列首元素对应的数组的索引。
-$\textit{rear}rear$：队列尾元素对应的索引的下一个索引。
+$\textit{elements}$：一个固定大小的数组，用于保存循环队列的元素。
+$\textit{capacity}$：循环队列的容量，即队列中最多可以容纳的元素数量。
+$\textit{front}$：队列首元素对应的数组的索引。
+$\textit{rear}$：队列尾元素对应的索引的下一个索引。
+[leetcode—link](https://leetcode.cn/problems/design-circular-queue/solution/she-ji-xun-huan-dui-lie-by-leetcode-solu-1w0a/)
+```python
+class MyCircularQueue:
+    def __init__(self, k: int):
+        self.front = self.rear = 0
+        self.elements = [0] * (k + 1)
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.elements[self.rear] = value
+        self.rear = (self.rear + 1) % len(self.elements)
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.front = (self.front + 1) % len(self.elements)
+        return True
+
+    def Front(self) -> int:
+        return -1 if self.isEmpty() else self.elements[self.front]
+
+    def Rear(self) -> int:
+        return -1 if self.isEmpty() else self.elements[(self.rear - 1) % len(self.elements)]
+
+    def isEmpty(self) -> bool:
+        return self.rear == self.front
+
+    def isFull(self) -> bool:
+        return (self.rear + 1) % len(self.elements) == self.front
+```
+
+
